@@ -34,3 +34,30 @@ pytest -q
 
 ## Next
 Add secure per-agent credentials, tool execution proxy with server-side enforcement, scoped one-time approval tokens, tenant-isolated PostgreSQL, and audited deployment.
+
+## SECURE
+
+- Gateway returns decisions only. It does not execute external tools or intercept agents automatically.
+- Default-deny is applied to checks.
+- Human approval is required for review actions. Approval does not auto-authorize subsequent execution.
+- Admin endpoints require the shared AGENTSHIELD_ADMIN_KEY.
+- Audit trail is written to SQLite. V1 has no RBAC, tenant isolation, or tamper-evident logging.
+- Development release. Not production-ready.
+
+## VERIFY
+
+Verification is evidence of decision recording and the non-execution boundary.
+
+- Blocked actions are recorded and rejected.
+- Review actions stay pending until explicit admin action.
+- Approving a review does not trigger automatic tool execution.
+- Emergency stop affects only this gateway.
+- Admin key is required for management.
+
+See `docs/VERIFY_WALKTHROUGH.md` for the concrete steps. Full operational card: `docs/OPERATIONAL_CARD.md`.
+
+## DOCUMENT
+
+- Operational card: `docs/OPERATIONAL_CARD.md`
+- Verification walkthrough: `docs/VERIFY_WALKTHROUGH.md`
+- Documentation defines the V1 decision-only boundary; production enforcement requires the protected executor described in the operational card.
